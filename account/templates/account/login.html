@@ -1,0 +1,42 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+<div class="row" style="display: flex; align-items: center; justify-content: center; height: 100%;">
+    <div class="login-image" style="flex: 1; text-align: center;">
+        <img src="/static/images/Login/LoginPage.jpeg" style="max-width: 100%; height: auto;"></img>
+    </div>
+    <div class="login-form" style="flex: 1;">
+        <h1 style="font-weight: 300; font-size: xx-large;">Welcome to AirMed!</h1>
+
+        
+        <form method="post" action=".">
+            {% csrf_token %}
+            <div >
+                <label for="id_email" style="font-size: large;">Email</label>
+
+                <input type="email" name="username" id="id_email" class="w-full py-4 px-6 rounded-xl border">
+            </div>
+
+            <div >
+                <label for="id_password" style="font-size: large;">Password</label>
+
+                <input type="password" name="password" id="id_password" class="w-full py-4 px-6 rounded-xl border">
+            </div>
+
+            {% if form.errors or form.non_field_errors %}
+                <div class="bg-rose-100 rounded-xl">
+                    {% for field in form %}
+                        {{ field.errors }}
+                    {% endfor %}
+
+                    {{ form.non_field_errors }}
+                </div>
+            {% endif %}
+            <br>
+            <div class="text-center">
+                <button style="background-color:#1987F8; font-size: large;"class="py-2 px-6 text-white rounded-xl">Login</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
