@@ -1,0 +1,126 @@
+{% load static %}
+
+<!doctype html>
+
+<html>
+    <title>AirMed Home</title>
+    <link rel="icon" type="image/x-icon" href="/static/images/Login/Logo.png">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/main.min.css' %}">
+    </head>
+    <title>AirMed Home</title>
+<link rel="icon" type="image/x-icon" href="/static/images/Login/Logo.png">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<style>
+  .grayscale {filter: grayscale(50%);}
+  .sidebar {
+    background: linear-gradient(180deg, #F02D84, #FF6648);
+    color: white;
+    min-height: 100vh;
+  }
+  .sidebar-icon {
+    margin: 20px 0;
+    padding: 10px;
+    border-radius: 5px;
+    color: white;
+    background-color: transparent;
+  }
+  .sidebar-icon:hover {
+    /* background-color: #e6006f; */
+    cursor: pointer;
+  }
+  .content {
+    text-align: center;
+    padding: 50px;
+  }
+  .content h2 {
+    margin-bottom: 20px;
+  }
+  .chat-button {
+    background-color: #007bff;
+    border: none;
+    border-radius: 20px;
+    padding: 10px 20px;
+    font-size: 16px;
+    color: white;
+    margin-top: 20px;
+  }
+  .chat-button:hover {
+    background-color: #0056b3;
+  }
+  .filter-white{
+    filter: invert(100%) sepia(3%) saturate(236%) hue-rotate(58deg) brightness(115%) contrast(100%);
+  }
+</style>
+</head>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-2 sidebar d-none d-md-block">
+      <br><br>
+      <div class="text-center mt-3 mb-4">
+        <img src="/static/images/Login/AirMedWhiteLogo.png" alt="AIRMED" style="max-width: 150px; margin-left: 32px; margin-right: 18px;">
+      </div>
+      <br><br><br><br>
+      {% if request.user.is_authenticated %}
+            <a href="{% url 'chat:admin' %}" >
+                    <button class="sidebar-icon text-center">
+                        <img src="/static/images/Menu/admin-person.svg" class="filter-white" style="width: 30px; height: 30px; margin-right: 20px;">
+                        <h3>Admin</h3>
+                    </button>
+            </a>
+      {% endif %}
+      <div class="sidebar-icon text-center row">
+        <img src="/static/images/Menu/Home.svg" class="filter-white" style="width: 30px; height: 30px; margin-right: 20px;">
+        <h3>Home</h3>
+      </div>
+      <br><br>
+      <div class="sidebar-icon text-center row">
+        <img src="/static/images/Menu/search.svg" class="filter-white" style="width: 30px; height: 30px; margin-right: 20px;">
+        <h3>Search</h3>
+      </div>
+      <br><br>
+      <div class="sidebar-icon text-center row">
+        <img src="/static/images/Menu/file-text.svg" class="filter-white" style="width: 30px; height: 30px; margin-right: 20px;">
+        <h3>Privacy</h3>
+      </div>
+    </div>
+    <div class="col-md-10 content">
+      <main class="max-w-6xl mx-auto p-6">
+        {% if messages %}
+            <div class="message mb-6 p-6 bg-gray-800 text-white rounded-xl">
+                {% for message in messages %}
+                    <p>{{ message }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+      </main>
+            
+      {% include 'chat/partials/chat_bubble.html' %}
+              <!-- <div id="chat_icon">
+                  <button id="chat_open" class="w-[50px] flex items-center">
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" class="text-rose-600">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 8.511c.884.284 1.5 1.128 1.5 2.097v4.286c0 1.136-.847 2.1-1.98 2.193-.34.027-.68.052-1.02.072v3.091l-3-3c-1.354 0-2.694-.055-4.02-.163a2.115 2.115 0 01-.825-.242m9.345-8.334a2.126 2.126 0 00-.476-.095 48.64 48.64 0 00-8.048 0c-1.131.094-1.976 1.057-1.976 2.192v4.286c0 .837.46 1.58 1.155 1.951m9.345-8.334V6.637c0-1.621-1.152-3.026-2.76-3.235A48.455 48.455 0 0011.25 3c-2.115 0-4.198.137-6.24.402-1.608.209-2.76 1.614-2.76 3.235v6.226c0 1.621 1.152 3.026 2.76 3.235.577.075 1.157.14 1.74.194V21l4.155-4.155" />
+                      </svg>              
+                  </button>
+              </div>
+              
+              <div id="chat_welcome" class="hidden">
+                  <input type="text" name="name" id="chat_name" class="w-full mb-4 py-2 px-6 rounded-xl bg-gray-100" placeholder="Your name...">
+  
+                  <button id="chat_join" class="py-2 px-6 rounded-xl text-white bg-rose-600">Join chat</button>
+              </div>
+  
+              <div id="chat_room" class="hidden">
+                  <div id="chat_log" class="mb-4 p-4 bg-gray-100 rounded-xl h-[300px] overflow-scroll">
+                      <p>Welcome to our chat! Please type your message and wait for an agent to join...</p>
+                  </div>
+  
+                  <input type="text" name="body" id="chat_message_input" class="w-full mb-4 p-4 bg-gray-100 rounded-xl" placeholder="Type your message...">
+                  <button id="chat_message_submit" class="py-2 px-6 bg-rose-600 text-white rounded-xl">Send</button>
+              </div> -->
+        {% block scripts %}
+        {% endblock %}
+    </body>
+</html>

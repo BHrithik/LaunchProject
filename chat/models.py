@@ -27,6 +27,7 @@ class Room(models.Model):
         (CLOSED, 'Closed'),
     )
 
+
     uuid = models.CharField(max_length=255)
     client = models.CharField(max_length=255)
     agent = models.ForeignKey(User, related_name='rooms', blank=True, null=True, on_delete=models.SET_NULL)
@@ -35,6 +36,11 @@ class Room(models.Model):
     case = models.CharField(max_length=255, blank=True, null=True)
     status = models.CharField(max_length=20, choices=CHOICES_STATUS, default=WAITING)
     created_at = models.DateTimeField(auto_now_add=True)
+    q1 = models.CharField(max_length=255, blank=True, null=True)
+    q2 = models.CharField(max_length=255, blank=True, null=True)
+    q3 = models.CharField(max_length=255, blank=True, null=True)
+    q4 = models.CharField(max_length=255, blank=True, null=True)
+    q5 = models.CharField(max_length=255, blank=True, null=True)
 
     class Meta:
         ordering = ('-created_at',)

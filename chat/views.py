@@ -17,8 +17,14 @@ from .models import Room
 def create_room(request, uuid):
     name = request.POST.get('name', '')
     url = request.POST.get('url', '')
+    q1 = request.POST.get('1stQ')
+    q2 = request.POST.get('2ndQ')
+    q3 = request.POST.get('3rdQ')
+    q4 = request.POST.get('4thQ')
+    q5 = request.POST.get('5thQ')
+    print("Created Chat room!")
 
-    Room.objects.create(uuid=uuid, client=name, url=url)
+    Room.objects.create(uuid=uuid, client=name, url=url, q1 = q1, q2 = q2, q3 = q3, q4 = q4, q5 = q5)
 
     return JsonResponse({'message': 'room created'})
 

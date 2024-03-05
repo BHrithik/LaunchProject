@@ -1,20 +1,207 @@
-<div id="chat" class="max-w-[300px] fixed right-2 bottom-2 p-4 bg-white border border-gray-300 rounded-xl">
+<style>
+    .a{
+        color:  #ff0078 !important; 
+    }
+    .a:hover{
+        color: #ff0078 !important;
+        text-decoration: none !important;
+    }
+    .top-bar {
+      padding: 10px 0;
+      text-align: right;
+      /* background-color:  */
+      /* background-color:linear-gradient(180deg, #f02d85, #FF6648); */
+      border-radius: 10px;
+    }
+    .top-bar button {
+      background: none;
+      border: solid 1px #EB0000;
+      border-radius: 20px;
+      padding: 5px 15px;
+      margin: 0 5px;
+      color: #EB0000;
+    }
+    .chat-area {
+      width: 40%;
+      padding: 20px;
+      height: calc(100vh - 120px);
+      overflow-y: auto;
+    }
+    .chat-area-ans {
+      width: 40%;
+      padding: 20px;
+      height: calc(100vh - 120px);
+      overflow-y: auto;
+    }
+    .chat-bubble {
+      background-color: #f8f8f8;
+      border-radius: 20px;
+      padding: 15px;
+      margin-bottom: 10px;
+      display: inline-block;
+    }
+    .chat-input {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      padding: 10px;
+      background-color: #fff;
+      border-top: solid 1px #ddd;
+    }
+    .response-button-back {
+      background-color: transparent;
+      border: solid 1px  #007bff;
+      border-radius: 20px;
+      padding: 10px 20px;
+      font-size: 16px;
+      color: #007bff;
+      margin: 5px;
+    }
+    .response-button {
+      background-color: #007bff;
+      border: none;
+      border-radius: 20px;
+      padding: 10px 20px;
+      font-size: 16px;
+      color: white;
+      margin: 5px;
+    }
+    .progress-bar{
+        background-color:#F02D84;
+    }
+  </style>
+
+<div id="chat">
     <div id="chat_icon">
-        <button id="chat_open" class="w-[50px] flex items-center">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" class="text-rose-600">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 8.511c.884.284 1.5 1.128 1.5 2.097v4.286c0 1.136-.847 2.1-1.98 2.193-.34.027-.68.052-1.02.072v3.091l-3-3c-1.354 0-2.694-.055-4.02-.163a2.115 2.115 0 01-.825-.242m9.345-8.334a2.126 2.126 0 00-.476-.095 48.64 48.64 0 00-8.048 0c-1.131.094-1.976 1.057-1.976 2.192v4.286c0 .837.46 1.58 1.155 1.951m9.345-8.334V6.637c0-1.621-1.152-3.026-2.76-3.235A48.455 48.455 0 0011.25 3c-2.115 0-4.198.137-6.24.402-1.608.209-2.76 1.614-2.76 3.235v6.226c0 1.621 1.152 3.026 2.76 3.235.577.075 1.157.14 1.74.194V21l4.155-4.155" />
-            </svg>              
+        <img src="/static/images/Login/Logo.png" alt="Globe Icon" style="margin-left:40%; max-width: 250px;">
+        <h2 >How can I help you today?</h2>
+        <button id="chat_open" style="margin:auto; width: 450px; height: 100px;" class="chat-button flex items-center">
+           <h3 style="align-content: center; margin: auto;">Start Chat</h3>             
         </button>
     </div>
-
+    
     <div id="chat_welcome" class="hidden">
+        <div id="first_phase">
+            <div class="top-bar" style="background-color: linear-gradient(to right, #F02D84, #FF6648);">
+                <button id="chat_join" style=" background-color: #F02D84;color: white;" class="skip-button" type="button">Skip Questionnaire</button>
+                <button type="button">
+                    <a style="color: #EB0000; text-decoration: none;" href="{% url 'core:index' %}" >Create New</a>
+                </button>
+                <button type="button">Share</button>
+                <br>
+                <br>
+                <div style="padding: 10px;">
+                    <div class="progress" style="height: 40px; border-radius: 25px;" >
+                        <div class="progress-bar progress-bar-striped" id="progress" role="progressbar" aria-label="Default striped example" style="width: 20%;font-size: medium;" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"> Answer 1 of 5</div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div>
+                    <img src="/static/images/Login/Logo.png" style="width: 40px; height: 40px; margin: 20px; margin-top: 30px;">
+                </div>
+                <div class="chat-area">
+                    <!-- Chat messages here -->
+                    <div id="First_question">
+                        <div class="chat-bubble">
+                            Hi! I'm AirMed's messaging assistant. Before connecting you with a remote doctor, let's gather some information to help the remote doctor get a better understanding of the situation.
+                        </div>
+                        <div class="chat-bubble">
+                            Is the patient still conscious?
+                        </div>
+                        <div class="option-chat-bubble">
+                            <div>
+                                <button type="button" id="first_ans_Yes" class="response-button">Yes</button>
+                                <button type="button" id="first_ans_No" class="response-button">No</button>
+                                <button type="button" id="first_ans_NS" class="response-button">Not Sure</button>
+                            </div>
+                        </div>
+                        <div class="answer-chat-bubble hidden">
+                            <div class="Yes">
+                                <button type="button" class="response-button">Yes</button>
+                            </div>
+                            <div class="No">
+                                <button type="button" class="response-button">No</button>
+                            </div>
+                            <div class="Not Sure">
+                                <button type="button" class="response-button">Not Sure</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="Second_question" class="hidden">
+                        <div class="chat-bubble">
+                            Is the patient experiencing any discomfort, pressure, or pain in their chest?
+                        </div>
+                        <div class="answer-chat-bubble">
+                            <div>
+                                <button type="button" id="sec_ans_back" class="response-button-back">Back</button>
+                                <button type="button" id="sec_ans_Yes" class="response-button">Yes</button>
+                                <button type="button" id="sec_ans_No" class="response-button">No</button>
+                                <button type="button" id="sec_ans_NS" class="response-button">Not Sure</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="Third_question" class="hidden">
+                        <div class="chat-bubble">
+                            Is the patient having difficulty breathing or experiencing shortness of breath? 
+                        </div>
+                        <div class="answer-chat-bubble">
+                            <div>
+                                <button type="button" id="third_ans_back" class="response-button-back">Back</button>
+                                <button type="button" id="third_ans_Yes" class="response-button">Yes</button>
+                                <button type="button" id="third_ans_No" class="response-button">No</button>
+                                <button type="button" id="third_ans_NS" class="response-button">Not Sure</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="Fourth_question" class="hidden">
+                        <div class="chat-bubble">
+                            Is the patient nauseous or feeling lightheaded?
+                        </div>
+                        <div class="answer-chat-bubble">
+                            <div>
+                                <button type="button" id="fourth_ans_back" class="response-button-back">Back</button>
+                                <button type="button" id="fourth_ans_Yes" class="response-button">Yes</button>
+                                <button type="button" id="fourth_ans_No" class="response-button">No</button>
+                                <button type="button" id="fourth_ans_NS" class="response-button">Not Sure</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="Fifth_question" class="hidden">
+                        <div class="chat-bubble">
+                            Is the patient experiencing a seizure?
+                        </div>
+                        <div class="answer-chat-bubble">
+                            <div>
+                                <button type="button" id="fifth_ans_back" class="response-button-back">Back</button>
+                                <button type="button" id="fifth_ans_Yes" class="response-button">Yes</button>
+                                <button type="button" id="fifth_ans_No" class="response-button">No</button>
+                                <button type="button" id="fifth_ans_NS" class="response-button">Not Sure</button>
+                            </div>
+                            <input type="text" name="name" id="chat_name" class="w-full mb-4 py-2 px-6 rounded-xl bg-gray-100" placeholder="Enter name (Optional)">
+                        </div>
+                    </div>
+                    <!-- Add more chat bubbles as needed -->
+                </div>
+            </div>
+            <!-- <button id="chat_join" class="py-2 px-6 rounded-xl text-white bg-rose-600">Tap Here to talk to a doctor immediately</button> 
+            <input type="text" name="name" id="chat_name" class="w-full mb-4 py-2 px-6 rounded-xl bg-gray-100" placeholder="Your name..."> -->
+            <script src="https://kit.fontawesome.com/your-fontawesome-kit.js"></script>
+            <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.9/dist/umd/popper.min.js"></script>
+            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        </div>
+    </div>
+
+    <!-- <div id="chat_welcome" class="hidden">
         <input type="text" name="name" id="chat_name" class="w-full mb-4 py-2 px-6 rounded-xl bg-gray-100" placeholder="Your name...">
 
         <button id="chat_join" class="py-2 px-6 rounded-xl text-white bg-rose-600">Join chat</button>
-    </div>
+    </div> -->
 
-    <div id="chat_room" class="hidden">
-        <div id="chat_log" class="mb-4 p-4 bg-gray-100 rounded-xl h-[300px] overflow-scroll">
+    <div id="chat_room" style="background-color: white;" class="hidden">
+        <div id="chat_log" class="mb-4 p-4 rounded-xl h-[500px] overflow-scroll">
             <p>Welcome to our chat! Please type your message and wait for an agent to join...</p>
         </div>
 

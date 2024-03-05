@@ -13,10 +13,12 @@
     <body>
         <div class="p-2">
             <nav class="p-6 text-black flex justify-between items-center rounded-xl">
-                <div class="row">
-                    <img src="/static/images/Login/Logo.png" style="display:inline-block; width: 36px; height: 32px;"></img>
-                    <img src="/static/images/Login/airMedLogo.png" style="display:inline-block; height: 35px; width: 115;"></img>
-                </div>
+                <a href="{% url 'chat:admin' %}">
+                    <div class="row">
+                        <img src="/static/images/Login/Logo.png" style="display:inline-block; width: 36px; height: 32px;"></img>
+                        <img src="/static/images/Login/airMedLogo.png" style="display:inline-block; height: 35px; width: 115;"></img>
+                    </div>
+                </a>
                 <!-- <a href="{% url 'core:index' %}" class="text-xl">AirMed</a> -->
 
                 <div class="flex items-center space-x-4">
